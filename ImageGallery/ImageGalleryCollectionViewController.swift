@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class ImageGalleryCollectionViewController: UICollectionViewController, UIDropInteractionDelegate {
+class ImageGalleryCollectionViewController: UICollectionViewController, UIDropInteractionDelegate, UICollectionViewDelegateFlowLayout {
     
     
     @IBOutlet weak var imageGalleryView: UICollectionView! {
@@ -19,7 +19,13 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UIDropIn
         }
     }
     
-    var imageUrlCollection: [(url: URL, image: UIImage)] = []
+    var imageUrlCollection: [(url: URL, aspectRatio: CGFloat)] = [] {
+        didSet {
+            collectionView?.reloadData()
+        }
+    }
+    
+    let imageCellWidth: CGFloat = 160.0
     
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSURL.self) && session.canLoadObjects(ofClass: UIImage.self)
@@ -38,7 +44,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UIDropIn
                     DispatchQueue.main.async {
                         if let imageData = urlContents, url == nsurls.first as? URL {
                             if let image = UIImage(data: imageData){
-                                self?.imageUrlCollection.append((url.imageURL, image))
+                                self?.imageUrlCollection.append((url.imageURL, image.size.height/image.size.width))
+                                print(self?.imageUrlCollection as Any)
                             }
                         }
                     }
@@ -79,22 +86,27 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UIDropIn
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return imageUrlCollection.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath)
     
         // Configure the cell
+        if let imageCell = cell as? ImageGalleryCollectionViewCell {
+            imageCell.backgroundImageUrl = imageUrlCollection[indexPath.item].url
+        }
     
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: imageCellWidth, height: imageCellWidth * imageUrlCollection[indexPath.item].aspectRatio)
     }
 
     // MARK: UICollectionViewDelegate

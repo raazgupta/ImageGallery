@@ -30,7 +30,28 @@
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SrS-g4-l3M">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        </imageView>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="CsD-Kc-zey" userLabel="Spinner">
+                                            <rect key="frame" x="15" y="15" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
                                 </view>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="CsD-Kc-zey" firstAttribute="centerY" secondItem="DNd-nx-YTi" secondAttribute="centerY" id="7Of-55-Ekc"/>
+                                    <constraint firstAttribute="bottom" secondItem="SrS-g4-l3M" secondAttribute="bottom" id="94d-zP-Ugo"/>
+                                    <constraint firstItem="CsD-Kc-zey" firstAttribute="centerX" secondItem="DNd-nx-YTi" secondAttribute="centerX" id="Ikx-C5-w0s"/>
+                                    <constraint firstItem="SrS-g4-l3M" firstAttribute="top" secondItem="DNd-nx-YTi" secondAttribute="top" id="nqe-HT-416"/>
+                                    <constraint firstItem="SrS-g4-l3M" firstAttribute="leading" secondItem="DNd-nx-YTi" secondAttribute="leading" id="ppc-92-kSW"/>
+                                    <constraint firstAttribute="trailing" secondItem="SrS-g4-l3M" secondAttribute="trailing" id="r9s-tL-plX"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="SrS-g4-l3M" id="hOX-jC-4bI"/>
+                                    <outlet property="spinner" destination="CsD-Kc-zey" id="vOi-TA-Say"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>

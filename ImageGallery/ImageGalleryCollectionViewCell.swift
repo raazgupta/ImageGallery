@@ -10,10 +10,32 @@ import UIKit
 
 class ImageGalleryCollectionViewCell: UICollectionViewCell {
     
-    var backgroundImage: UIImage? { didSet { setNeedsDisplay() }}
+    var backgroundImageUrl: URL? { didSet { setNeedsDisplay() }}
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     override func draw(_ rect: CGRect) {
-        backgroundImage?.draw(in: bounds)
+        
+        imageView.image = nil
+        spinner.startAnimating()
+        
+        if let url = backgroundImageUrl {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                    let urlContents = try? Data(contentsOf: url)
+                    DispatchQueue.main.async {
+                        if let imageData = urlContents, url == self?.backgroundImageUrl {
+                            if let backGroundImage = UIImage(data: imageData) {
+                                self?.imageView.image = backGroundImage
+                                self?.imageView.sizeThatFits((self?.bounds.size)!)
+                            }
+                        }
+                        self?.spinner.stopAnimating()
+                    }
+                
+            }
+        }
     }
     
 }
