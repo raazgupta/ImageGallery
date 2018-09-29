@@ -13,36 +13,15 @@ private let reuseIdentifier = "Cell"
 class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
     
     
-    @IBOutlet weak var imageGalleryView: UICollectionView! {
-        didSet {
-            //imageGalleryView.addInteraction(UIDropInteraction(delegate: self))
-        }
-    }
+    @IBOutlet weak var imageGalleryView: UICollectionView!
     
-    var imageUrlCollection: [(url: URL, aspectRatio: CGFloat)] = [] {
-        didSet {
-            //collectionView?.reloadData()
-        }
-    }
+    var imageUrlCollection: [(url: URL, aspectRatio: CGFloat)] = []
     
     let imageCellWidth: CGFloat = 160.0
-    
-    /*
-    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
-        return session.canLoadObjects(ofClass: NSURL.self) && session.canLoadObjects(ofClass: UIImage.self)
-    }
-    
-    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        return UIDropProposal(operation: .copy)
-    }
-    */
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -54,20 +33,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -94,29 +60,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     }
 
     
-    
-    //Drop
-    /*
-    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        session.loadObjects(ofClass: NSURL.self, completion: { nsurls in
-            if let url = nsurls.first as? URL {
-                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                    let urlContents = try? Data(contentsOf: url.imageURL)
-                    DispatchQueue.main.async {
-                        if let imageData = urlContents, url == nsurls.first as? URL {
-                            if let image = UIImage(data: imageData){
-                                self?.imageUrlCollection.append((url.imageURL, image.size.height/image.size.width))
-                                print(self?.imageUrlCollection as Any)
-                            }
-                        }
-                    }
-                }
-            }
-            
-        })
-    }
-    */
-    
     // Dragging and Dropping within Collection View
     
     // Drag
@@ -126,15 +69,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     }
     
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
-        /*
-        if let image = (collectionView?.cellForItem(at: indexPath) as? ImageGalleryCollectionViewCell)?.imageView.image {
-            let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
-            dragItem.localObject = image
-            return [dragItem]
-        } else {
-            return []
-        }*/
-        print("Entered dragItemsIndexPath")
         let nsUrlItem = imageUrlCollection[indexPath.item].url as NSURL
         let dragItem = UIDragItem(itemProvider: NSItemProvider(object: nsUrlItem))
         dragItem.localObject = imageUrlCollection[indexPath.item]
@@ -143,8 +77,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
     //Drop
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
-        print (session.canLoadObjects(ofClass: NSURL.self))
-        //return session.canLoadObjects(ofClass: NSURL.self) && session.canLoadObjects(ofClass: UIImage.self)
         return session.canLoadObjects(ofClass: NSURL.self)
     }
     
@@ -159,9 +91,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath {
                 if let imageUrlCollectionItem = item.dragItem.localObject as? (url: URL, aspectRatio: CGFloat) {
-                    print("Entered local perfromDrop")
                     collectionView.performBatchUpdates({
-                        print("Entered batchUpdate")
                         imageUrlCollection.remove(at: sourceIndexPath.item)
                         imageUrlCollection.insert(imageUrlCollectionItem, at: destinationIndexPath.item)
                         collectionView.deleteItems(at: [sourceIndexPath])

@@ -14,12 +14,9 @@ class ImageGalleryCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    //@IBOutlet weak var spinner: UIActivityIndicatorView!
-    
     override func draw(_ rect: CGRect) {
         
         imageView.image = nil
-        //spinner.startAnimating()
         
         if let url = backgroundImageUrl {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -31,9 +28,7 @@ class ImageGalleryCollectionViewCell: UICollectionViewCell {
                                 self?.imageView.sizeThatFits((self?.bounds.size)!)
                             }
                         }
-                        //self?.spinner.stopAnimating()
                     }
-                
             }
         }
     }
