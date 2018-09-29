@@ -18,40 +18,53 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="y90-wL-mJc">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="160" height="160"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCell" id="DNd-nx-YTi" customClass="ImageGalleryCollectionViewCell" customModule="ImageGallery" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SrS-g4-l3M">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                         </imageView>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="CsD-Kc-zey" userLabel="Spinner">
-                                            <rect key="frame" x="15" y="15" width="20" height="20"/>
-                                        </activityIndicatorView>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="CsD-Kc-zey" firstAttribute="centerY" secondItem="DNd-nx-YTi" secondAttribute="centerY" id="7Of-55-Ekc"/>
                                     <constraint firstAttribute="bottom" secondItem="SrS-g4-l3M" secondAttribute="bottom" id="94d-zP-Ugo"/>
-                                    <constraint firstItem="CsD-Kc-zey" firstAttribute="centerX" secondItem="DNd-nx-YTi" secondAttribute="centerX" id="Ikx-C5-w0s"/>
                                     <constraint firstItem="SrS-g4-l3M" firstAttribute="top" secondItem="DNd-nx-YTi" secondAttribute="top" id="nqe-HT-416"/>
                                     <constraint firstItem="SrS-g4-l3M" firstAttribute="leading" secondItem="DNd-nx-YTi" secondAttribute="leading" id="ppc-92-kSW"/>
                                     <constraint firstAttribute="trailing" secondItem="SrS-g4-l3M" secondAttribute="trailing" id="r9s-tL-plX"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="SrS-g4-l3M" id="hOX-jC-4bI"/>
-                                    <outlet property="spinner" destination="CsD-Kc-zey" id="vOi-TA-Say"/>
                                 </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DropPlaceHolderCell" id="xLj-Tj-ugs">
+                                <rect key="frame" x="173" y="0.0" width="160" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="izo-ae-1Cy" userLabel="Spinner">
+                                            <rect key="frame" x="70" y="70" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                </view>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="izo-ae-1Cy" firstAttribute="centerX" secondItem="xLj-Tj-ugs" secondAttribute="centerX" id="1Oc-rR-3If"/>
+                                    <constraint firstItem="izo-ae-1Cy" firstAttribute="centerY" secondItem="xLj-Tj-ugs" secondAttribute="centerY" id="ohT-oT-3b9"/>
+                                </constraints>
+                                <size key="customSize" width="160" height="160"/>
                             </collectionViewCell>
                         </cells>
                         <connections>
