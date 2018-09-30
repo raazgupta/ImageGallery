@@ -12,13 +12,27 @@ private let reuseIdentifier = "Cell"
 
 class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
     
-    
     @IBOutlet weak var imageGalleryView: UICollectionView!
     
     var imageUrlCollection: [(url: URL, aspectRatio: CGFloat)] = []
     
-    let imageCellWidth: CGFloat = 160.0
+    var imageCellWidth: CGFloat = 160.0
     
+    @IBAction func scaleCells(_ sender: UIPinchGestureRecognizer) {
+        if sender.state == .ended {
+            imageCellWidth = imageCellWidth * sender.scale
+            if let maxWidth = collectionView?.contentSize.width {
+                if imageCellWidth >= maxWidth {
+                    imageCellWidth = maxWidth
+                }
+            }
+            flowLayout?.invalidateLayout()
+        }
+    }
+    
+    var flowLayout: UICollectionViewFlowLayout? {
+        return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +43,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         // Do any additional setup after loading the view.
         collectionView?.dragDelegate = self
         collectionView?.dropDelegate = self
+        
+        imageCellWidth = (collectionView?.bounds.width)! / 4
+        
     }
 
     override func didReceiveMemoryWarning() {
