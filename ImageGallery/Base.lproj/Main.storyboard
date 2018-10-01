@@ -61,7 +61,7 @@
             <objects>
                 <collectionViewController id="4kr-5H-xt1" customClass="ImageGalleryCollectionViewController" customModule="ImageGallery" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jMs-KQ-fkV">
-                        <rect key="frame" x="0.0" y="0.0" width="703.5" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
@@ -82,21 +82,27 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SrS-g4-l3M">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                         </imageView>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="qQh-5D-0ob">
+                                            <rect key="frame" x="70" y="70" width="20" height="20"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="qQh-5D-0ob" firstAttribute="centerY" secondItem="DNd-nx-YTi" secondAttribute="centerY" id="7uj-fK-EOZ"/>
                                     <constraint firstAttribute="bottom" secondItem="SrS-g4-l3M" secondAttribute="bottom" id="94d-zP-Ugo"/>
+                                    <constraint firstItem="qQh-5D-0ob" firstAttribute="centerX" secondItem="DNd-nx-YTi" secondAttribute="centerX" id="ekl-a6-9fz"/>
                                     <constraint firstItem="SrS-g4-l3M" firstAttribute="top" secondItem="DNd-nx-YTi" secondAttribute="top" id="nqe-HT-416"/>
                                     <constraint firstItem="SrS-g4-l3M" firstAttribute="leading" secondItem="DNd-nx-YTi" secondAttribute="leading" id="ppc-92-kSW"/>
                                     <constraint firstAttribute="trailing" secondItem="SrS-g4-l3M" secondAttribute="trailing" id="r9s-tL-plX"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="imageCellSpinner" destination="qQh-5D-0ob" id="GhM-P6-qkZ"/>
                                     <outlet property="imageView" destination="SrS-g4-l3M" id="hOX-jC-4bI"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DropPlaceHolderCell" id="xLj-Tj-ugs">
-                                <rect key="frame" x="181" y="0.0" width="160" height="160"/>
+                                <rect key="frame" x="173" y="0.0" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
@@ -140,7 +146,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zEs-2d-As5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <splitViewController id="UFE-7k-eda" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="4kr-5H-xt1" kind="showDetail" id="ehj-HH-1Mo"/>
+                        <segue destination="4kr-5H-xt1" kind="showDetail" identifier="splitViewShowDetail" id="ehj-HH-1Mo"/>
                         <segue destination="yI7-hB-K9I" kind="relationship" relationship="masterViewController" id="384-Mi-loS"/>
                     </connections>
                 </splitViewController>
@@ -167,6 +173,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ggZ-gt-5rg"/>
+        <segue reference="ehj-HH-1Mo"/>
     </inferredMetricsTieBreakers>
 </document>

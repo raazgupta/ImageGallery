@@ -10,8 +10,11 @@ import UIKit
 
 class ImageGalleryTableViewController: UITableViewController {
 
-    var imageGalleryTitles: [String] = ["Gallery"]
-    var recentlyDeletedTitles: [String] = []
+    //var imageGalleryTitles: [String] = ["Gallery"]
+    //var recentlyDeletedTitles: [String] = []
+    
+    var imageGalleries: [ImageGalleryModel] = [ImageGalleryModel(title: "Gallery")]
+    var recentlyDeletedImageGalleries: [ImageGalleryModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +38,7 @@ class ImageGalleryTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
+        if section == 1 && recentlyDeletedImageGalleries.count > 0 {
             return "Recently Deleted"
         }
         else {
@@ -46,9 +49,9 @@ class ImageGalleryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return imageGalleryTitles.count
+            return imageGalleries.count
         case 1:
-            return recentlyDeletedTitles.count
+            return recentlyDeletedImageGalleries.count
         default:
             return 0
         }
@@ -61,9 +64,9 @@ class ImageGalleryTableViewController: UITableViewController {
         // Configure the cell...
         switch indexPath.section {
         case 0:
-            cell.textLabel?.text = imageGalleryTitles[indexPath.row]
+            cell.textLabel?.text = imageGalleries[indexPath.row].galleryTitle
         case 1:
-            cell.textLabel?.text = recentlyDeletedTitles[indexPath.row]
+            cell.textLabel?.text = recentlyDeletedImageGalleries[indexPath.row].galleryTitle
         default:
             break
         }
@@ -74,8 +77,11 @@ class ImageGalleryTableViewController: UITableViewController {
     
     
     @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
-        imageGalleryTitles += ["Gallery".madeUnique(withRespectTo: imageGalleryTitles)]
-        tableView.insertRows(at: [IndexPath(row: imageGalleryTitles.count - 1, section: 0)], with: .left)
+        //imageGalleryTitles += ["Gallery".madeUnique(withRespectTo: imageGalleryTitles)]
+        imageGalleries += [ImageGalleryModel(title: "Gallery".madeUnique(withRespectTo: imageGalleries.map({
+            $0.galleryTitle
+        })))]
+        tableView.insertRows(at: [IndexPath(row: imageGalleries.count - 1, section: 0)], with: .left)
     }
     
     
@@ -95,13 +101,13 @@ class ImageGalleryTableViewController: UITableViewController {
             // Delete the row from the data source
             tableView.performBatchUpdates({
                 if indexPath.section == 0 {
-                    let deletedImageGalleryTitle = imageGalleryTitles.remove(at: indexPath.row)
+                    let deletedImageGallery = imageGalleries.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
-                    recentlyDeletedTitles += [deletedImageGalleryTitle]
-                    tableView.insertRows(at: [IndexPath(row: recentlyDeletedTitles.count - 1, section: 1)], with: .left)
+                    recentlyDeletedImageGalleries += [deletedImageGallery]
+                    tableView.insertRows(at: [IndexPath(row: recentlyDeletedImageGalleries.count - 1, section: 1)], with: .left)
                 }
                 else if indexPath.section == 1 {
-                    recentlyDeletedTitles.remove(at: indexPath.row)
+                    recentlyDeletedImageGalleries.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 }
             })
@@ -115,7 +121,11 @@ class ImageGalleryTableViewController: UITableViewController {
     // Segue to the Image Gallery Collection View by tapping on Table cell
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailImageGallery" {
-            print ("Preparing for Segue")
+            if let imageGalleryCVC = segue.destination as? ImageGalleryCollectionViewController {
+                if let imageGalleryIndex = tableView.indexPathForSelectedRow {
+                    imageGalleryCVC.imageGallery = imageGalleries[imageGalleryIndex.row]
+                }
+            }
         }
     }
 

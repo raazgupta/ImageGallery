@@ -13,6 +13,7 @@ class ImageGalleryCollectionViewCell: UICollectionViewCell {
     var backgroundImageUrl: URL? { didSet { setNeedsDisplay() }}
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageCellSpinner: UIActivityIndicatorView!
     
     override func draw(_ rect: CGRect) {
         
@@ -26,6 +27,7 @@ class ImageGalleryCollectionViewCell: UICollectionViewCell {
                             if let backGroundImage = UIImage(data: imageData) {
                                 self?.imageView.image = backGroundImage
                                 self?.imageView.sizeThatFits((self?.bounds.size)!)
+                                self?.imageCellSpinner.stopAnimating()
                             }
                         }
                     }

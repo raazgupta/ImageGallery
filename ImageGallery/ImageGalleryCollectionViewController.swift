@@ -14,7 +14,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
     @IBOutlet weak var imageGalleryView: UICollectionView!
     
-    var imageUrlCollection: [(url: URL, aspectRatio: CGFloat)] = []
+    //var imageUrlCollection: [(url: URL, aspectRatio: CGFloat)] = []
+    var imageGallery: ImageGalleryModel = ImageGalleryModel(title: "Gallery")
     
     var imageCellWidth: CGFloat = 160.0
     
@@ -58,7 +59,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageUrlCollection.count
+        return imageGallery.galleryContents.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -66,14 +67,14 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
         // Configure the cell
         if let imageCell = cell as? ImageGalleryCollectionViewCell {
-            imageCell.backgroundImageUrl = imageUrlCollection[indexPath.item].url
+            imageCell.backgroundImageUrl = imageGallery.galleryContents[indexPath.item].url
         }
     
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: imageCellWidth, height: imageCellWidth * imageUrlCollection[indexPath.item].aspectRatio)
+        return CGSize(width: imageCellWidth, height: imageCellWidth * imageGallery.galleryContents[indexPath.item].aspectRatio)
     }
 
     
@@ -86,15 +87,15 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     }
     
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
-        let nsUrlItem = imageUrlCollection[indexPath.item].url as NSURL
+        let nsUrlItem = imageGallery.galleryContents[indexPath.item].url as NSURL
         let dragItem = UIDragItem(itemProvider: NSItemProvider(object: nsUrlItem))
-        dragItem.localObject = imageUrlCollection[indexPath.item]
+        dragItem.localObject = imageGallery.galleryContents[indexPath.item]
         return [dragItem]
     }
     
     //Drop
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
-        return session.canLoadObjects(ofClass: NSURL.self) && session.canLoadObjects(ofClass: UIImage.self)
+        return session.canLoadObjects(ofClass: NSURL.self)
     }
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
@@ -109,8 +110,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
             if let sourceIndexPath = item.sourceIndexPath {
                 if let imageUrlCollectionItem = item.dragItem.localObject as? (url: URL, aspectRatio: CGFloat) {
                     collectionView.performBatchUpdates({
-                        imageUrlCollection.remove(at: sourceIndexPath.item)
-                        imageUrlCollection.insert(imageUrlCollectionItem, at: destinationIndexPath.item)
+                        imageGallery.galleryContents.remove(at: sourceIndexPath.item)
+                        imageGallery.galleryContents.insert(imageUrlCollectionItem, at: destinationIndexPath.item)
                         collectionView.deleteItems(at: [sourceIndexPath])
                         collectionView.insertItems(at: [destinationIndexPath])
                     })
@@ -127,7 +128,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
                                 if let imageData = urlContents, url == provider as? URL {
                                     if let image = UIImage(data: imageData) {
                                         placeholderContext.commitInsertion(dataSourceUpdates: { inserttionIndexPath in
-                                            self?.imageUrlCollection.insert((url.imageURL,image.size.height/image.size.width), at: inserttionIndexPath.item)
+                                            self?.imageGallery.galleryContents.insert((url.imageURL,image.size.height/image.size.width), at: inserttionIndexPath.item)
                                         })
                                     }
                                 }
