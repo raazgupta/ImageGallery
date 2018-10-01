@@ -111,6 +111,13 @@ class ImageGalleryTableViewController: UITableViewController {
         }    
     }
     
+    
+    // Segue to the Image Gallery Collection View by tapping on Table cell
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetailImageGallery" {
+            print ("Preparing for Segue")
+        }
+    }
 
     /*
     // Override to support rearranging the table view.
