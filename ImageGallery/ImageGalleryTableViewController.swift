@@ -33,12 +33,21 @@ class ImageGalleryTableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return "Recently Deleted"
+        }
+        else {
+            return ""
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 1:
+        case 0:
             return imageGalleryTitles.count
-        case 2:
+        case 1:
             return recentlyDeletedTitles.count
         default:
             return 0
@@ -51,9 +60,9 @@ class ImageGalleryTableViewController: UITableViewController {
 
         // Configure the cell...
         switch indexPath.section {
-        case 1:
+        case 0:
             cell.textLabel?.text = imageGalleryTitles[indexPath.row]
-        case 2:
+        case 1:
             cell.textLabel?.text = recentlyDeletedTitles[indexPath.row]
         default:
             break
@@ -66,7 +75,7 @@ class ImageGalleryTableViewController: UITableViewController {
     
     @IBAction func newImageGallery(_ sender: UIBarButtonItem) {
         imageGalleryTitles += ["Gallery".madeUnique(withRespectTo: imageGalleryTitles)]
-        tableView.insertRows(at: [IndexPath(row: imageGalleryTitles.count - 1, section: 1)], with: .left)
+        tableView.insertRows(at: [IndexPath(row: imageGalleryTitles.count - 1, section: 0)], with: .left)
     }
     
     
@@ -79,17 +88,29 @@ class ImageGalleryTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.performBatchUpdates({
+                if indexPath.section == 0 {
+                    let deletedImageGalleryTitle = imageGalleryTitles.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    recentlyDeletedTitles += [deletedImageGalleryTitle]
+                    tableView.insertRows(at: [IndexPath(row: recentlyDeletedTitles.count - 1, section: 1)], with: .left)
+                }
+                else if indexPath.section == 1 {
+                    recentlyDeletedTitles.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+            })
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
