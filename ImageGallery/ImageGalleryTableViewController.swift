@@ -117,6 +117,24 @@ class ImageGalleryTableViewController: UITableViewController {
         }    
     }
     
+    // Swipe to the right to un-delete
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.section == 1 {
+            let undeleteAction = UIContextualAction(style: .destructive, title: "Restore", handler: {_,_,_ in
+                tableView.performBatchUpdates({
+                        let deletedImageGallery = self.recentlyDeletedImageGalleries.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                        self.imageGalleries += [deletedImageGallery]
+                        tableView.insertRows(at: [IndexPath(row: self.imageGalleries.count - 1, section: 0)], with: .left)
+                        //tableView.reloadSections(IndexSet(integersIn: 0...1), with: .fade)
+                        tableView.reloadData()
+                })
+            })
+            return UISwipeActionsConfiguration(actions: [undeleteAction])
+        }
+        return nil
+    }
+    
     
     // Segue to the Image Gallery Collection View by tapping on Table cell
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -127,6 +145,14 @@ class ImageGalleryTableViewController: UITableViewController {
                 }
             }
         }
+    }
+    
+    // Do not allow recently deleted rows to Segue
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if tableView.indexPathForSelectedRow?.section == 1 && identifier == "showDetailImageGallery" {
+            return false
+        }
+        return true
     }
 
     /*
