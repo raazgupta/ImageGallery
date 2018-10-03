@@ -16,6 +16,8 @@
 		AD6F8D9C215854CC00650C8A /* ImageGalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6F8D9B215854CC00650C8A /* ImageGalleryCollectionViewCell.swift */; };
 		ADAF5E862160C2240009C1C1 /* ImageGalleryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAF5E852160C2240009C1C1 /* ImageGalleryTableViewController.swift */; };
 		ADAF5E882162B0230009C1C1 /* ImageGalleryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAF5E872162B0230009C1C1 /* ImageGalleryModel.swift */; };
+		ADAF5E8A216404F30009C1C1 /* ImageGallerySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAF5E89216404F30009C1C1 /* ImageGallerySplitViewController.swift */; };
+		ADAF5E8C21640CE20009C1C1 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAF5E8B21640CE20009C1C1 /* ImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		AD6F8D9B215854CC00650C8A /* ImageGalleryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryCollectionViewCell.swift; sourceTree = "<group>"; };
 		ADAF5E852160C2240009C1C1 /* ImageGalleryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryTableViewController.swift; sourceTree = "<group>"; };
 		ADAF5E872162B0230009C1C1 /* ImageGalleryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryModel.swift; sourceTree = "<group>"; };
+		ADAF5E89216404F30009C1C1 /* ImageGallerySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGallerySplitViewController.swift; sourceTree = "<group>"; };
+		ADAF5E8B21640CE20009C1C1 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				AD6F8D8821584CF400650C8A /* Main.storyboard */,
+				ADAF5E8B21640CE20009C1C1 /* ImageViewController.swift */,
+				ADAF5E89216404F30009C1C1 /* ImageGallerySplitViewController.swift */,
 				ADAF5E852160C2240009C1C1 /* ImageGalleryTableViewController.swift */,
 				ADAF5E872162B0230009C1C1 /* ImageGalleryModel.swift */,
 				AD6F8D9921584FC500650C8A /* ImageGalleryCollectionViewController.swift */,
@@ -158,8 +164,10 @@
 				ADAF5E862160C2240009C1C1 /* ImageGalleryTableViewController.swift in Sources */,
 				AD6F8D9821584D8C00650C8A /* Utilities.swift in Sources */,
 				AD6F8D9C215854CC00650C8A /* ImageGalleryCollectionViewCell.swift in Sources */,
+				ADAF5E8A216404F30009C1C1 /* ImageGallerySplitViewController.swift in Sources */,
 				AD6F8D8521584CF400650C8A /* AppDelegate.swift in Sources */,
 				ADAF5E882162B0230009C1C1 /* ImageGalleryModel.swift in Sources */,
+				ADAF5E8C21640CE20009C1C1 /* ImageViewController.swift in Sources */,
 				AD6F8D9A21584FC500650C8A /* ImageGalleryCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

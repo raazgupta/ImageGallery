@@ -47,6 +47,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         
         imageCellWidth = (collectionView?.bounds.width)! / 4
         
+        // Add button to display gallery table
+        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -144,4 +147,17 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         }
     }
 
+    // Segue to show the full image in new MVC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showImage" {
+            if let imageVC = segue.destination.contents as? ImageViewController {
+                if let collectionViewIndices = collectionView?.indexPathsForSelectedItems, let collectionViewIndex = collectionViewIndices.first
+                {
+                    let imageGalleryContent = imageGallery.galleryContents[collectionViewIndex.item]
+                    imageVC.imageURL = imageGalleryContent.url
+                }
+            }
+        }
+    }
+    
 }

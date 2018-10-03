@@ -18,7 +18,7 @@ class ImageGalleryTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -139,7 +139,7 @@ class ImageGalleryTableViewController: UITableViewController {
     // Segue to the Image Gallery Collection View by tapping on Table cell
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailImageGallery" {
-            if let imageGalleryCVC = segue.destination as? ImageGalleryCollectionViewController {
+            if let imageGalleryCVC = segue.destination.contents as? ImageGalleryCollectionViewController {
                 if let imageGalleryIndex = tableView.indexPathForSelectedRow {
                     imageGalleryCVC.imageGallery = imageGalleries[imageGalleryIndex.row]
                 }
