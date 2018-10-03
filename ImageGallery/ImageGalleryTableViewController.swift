@@ -59,18 +59,25 @@ class ImageGalleryTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "GalleryNameCell", for: indexPath)
 
         // Configure the cell...
-        switch indexPath.section {
-        case 0:
-            cell.textLabel?.text = imageGalleries[indexPath.row].galleryTitle
-        case 1:
-            cell.textLabel?.text = recentlyDeletedImageGalleries[indexPath.row].galleryTitle
-        default:
-            break
+        if let cell = cell as? ImageGalleryTableViewCell {
+            switch indexPath.section {
+            case 0:
+                cell.galleryTitle.text = imageGalleries[indexPath.row].galleryTitle
+            case 1:
+                cell.galleryTitle.text = recentlyDeletedImageGalleries[indexPath.row].galleryTitle
+            default:
+                break
+            }
+            cell.resignationHandler = { [weak self, unowned cell] in
+                if let title = cell.galleryTitle.text {
+                    self?.imageGalleries[indexPath.row].galleryTitle = title
+                }
+            }
         }
-        
 
         return cell
     }
@@ -155,6 +162,8 @@ class ImageGalleryTableViewController: UITableViewController {
         return true
     }
 
+
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
