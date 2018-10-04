@@ -85,9 +85,12 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
     // Drag
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        session.localContext = collectionView
-        return dragItems(at: indexPath)
+        
+            session.localContext = collectionView
+            return dragItems(at: indexPath)
     }
+    
+    
     
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
         let nsUrlItem = imageGallery.galleryContents[indexPath.item].url as NSURL
