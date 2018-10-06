@@ -142,7 +142,13 @@
                             <outletCollection property="gestureRecognizers" destination="46x-hR-WEF" appends="YES" id="MeW-gs-gAg"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="rdB-Y8-iPo"/>
+                    <navigationItem key="navigationItem" id="rdB-Y8-iPo">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="SQf-Zq-54c">
+                            <connections>
+                                <action selector="addPaste:" destination="4kr-5H-xt1" id="koB-Lf-oUb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="imageGalleryView" destination="jMs-KQ-fkV" id="6sG-KT-IbB"/>
                     </connections>
@@ -194,13 +200,13 @@
         <!--Image Gallery Split View Controller-->
         <scene sceneID="F73-NG-Hro">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zEs-2d-As5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <splitViewController id="UFE-7k-eda" customClass="ImageGallerySplitViewController" customModule="ImageGallery" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="Pys-Rx-Wbv" kind="showDetail" identifier="splitViewShowDetail" id="ehj-HH-1Mo"/>
                         <segue destination="yI7-hB-K9I" kind="relationship" relationship="masterViewController" id="384-Mi-loS"/>
                     </connections>
                 </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zEs-2d-As5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-661" y="889"/>
         </scene>

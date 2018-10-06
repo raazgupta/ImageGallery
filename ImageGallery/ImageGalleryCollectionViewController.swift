@@ -84,6 +84,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     // Dragging and Dropping within Collection View
     
     // Drag
+    
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         
             session.localContext = collectionView
@@ -98,6 +99,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
         dragItem.localObject = imageGallery.galleryContents[indexPath.item]
         return [dragItem]
     }
+ 
     
     //Drop
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
@@ -112,9 +114,16 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
+        
+            
         for item in coordinator.items {
+            
+
+            
             if let sourceIndexPath = item.sourceIndexPath {
+                
                 if let imageUrlCollectionItem = item.dragItem.localObject as? (url: URL, aspectRatio: CGFloat) {
+                    
                     collectionView.performBatchUpdates({
                         imageGallery.galleryContents.remove(at: sourceIndexPath.item)
                         imageGallery.galleryContents.insert(imageUrlCollectionItem, at: destinationIndexPath.item)
@@ -122,32 +131,37 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
                         collectionView.insertItems(at: [destinationIndexPath])
                     })
                     coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                    
                 }
             }
             else {
                 let placeholderContext = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "DropPlaceHolderCell"))
+                
                 item.dragItem.itemProvider.loadObject(ofClass: NSURL.self) { (provider, error) in
                     if let url = provider as? URL {
+                        
                         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                             let urlContents = try? Data(contentsOf: url.imageURL)
                             DispatchQueue.main.async {
                                 if let imageData = urlContents, url == provider as? URL {
                                     if let image = UIImage(data: imageData) {
-                                        placeholderContext.commitInsertion(dataSourceUpdates: { inserttionIndexPath in
-                                            self?.imageGallery.galleryContents.insert((url.imageURL,image.size.height/image.size.width), at: inserttionIndexPath.item)
+                                        placeholderContext.commitInsertion(dataSourceUpdates: { insertionIndexPath in
+                                            self?.imageGallery.galleryContents.insert((url.imageURL,image.size.height/image.size.width), at: insertionIndexPath.item)
                                         })
                                     }
                                 }
                                 else {
                                     placeholderContext.deletePlaceholder()
                                 }
+                                
                             }
                         }
                     }
-                    
                 }
             }
+            
         }
+        
     }
 
     // Segue to show the full image in new MVC
@@ -162,5 +176,34 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
             }
         }
     }
+    
+    // Add new collection view cell and paste image in PasteBoard
+    @IBAction func addPaste(_ sender: Any) {
+        //imageGallery.galleryContents.insert((URL(string: "http://www.clker.com/cliparts/3/m/v/Y/E/V/small-red-apple-md.png")!,1.0), at: 0)
+        //collectionView?.insertItems(at: [IndexPath(row: 0, section: 0)])
+        
+        if UIPasteboard.general.hasURLs {
+            if let url = UIPasteboard.general.url {
+                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                    let urlContents = try? Data(contentsOf: url.imageURL)
+                    DispatchQueue.main.async {
+                        if let imageData = urlContents {
+                            if let image = UIImage(data: imageData) {
+                                self?.imageGallery.galleryContents.insert((url,image.size.height/image.size.width), at: 0)
+                                self?.collectionView?.insertItems(at: [IndexPath(row: 0, section: 0)])
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+        else {
+            print ("No URL")
+        }
+        
+    }
+    
+    
     
 }
